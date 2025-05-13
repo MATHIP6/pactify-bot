@@ -13,9 +13,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@sequelize/core": "7.0.0-alpha.46",
+    "@sequelize/sqlite3": "7.0.0-alpha.46",
     "discord.js": "^14.18.0",
     "dotenv": "^16.4.7",
-    "md5": "^2.3.0"
+    "md5": "^2.3.0",
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@types/node": "^22.13.10",
