@@ -1,4 +1,4 @@
-import Faction from './faction';
+import Faction from "./faction";
 
 export class EventPoint {
   public faction: Faction;

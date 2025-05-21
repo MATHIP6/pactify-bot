@@ -1,5 +1,5 @@
-import { GuildMember } from 'discord.js';
+import { GuildMember } from "discord.js";
 
 export function isMemberAdmin(member: GuildMember): boolean {
-    return member.permissions.has('Administrator');
+  return member.permissions.has("Administrator");
 }

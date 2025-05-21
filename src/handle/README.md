@@ -1,4 +1,3 @@
-
 # pactify-api
 
 A simple API wrapper for Pactify - see https://www.pactify.fr/.
@@ -11,61 +10,77 @@ Due to the simplicity of the API, I think there is no need to write a long docum
 ### Imports
 
 ```js
-const { Player, Faction, Ranking } = require('pactify-api');
+const { Player, Faction, Ranking } = require("pactify-api");
 ```
+
 ### Player
 
 The only guaranteed properties are `id`, `name`, `registrationDate`, `lastActivityDate`, `activityTime`, `online`.
+
 - Get a player by his name:
-	```js
-	Player.fromName('username').then(player => {
-	    console.log(player);
-	}).catch(error => {
-	    console.log(error.error);
-	});
-	```
+  ```js
+  Player.fromName("username")
+    .then((player) => {
+      console.log(player);
+    })
+    .catch((error) => {
+      console.log(error.error);
+    });
+  ```
 - Get a player by his ID:
-	```js
-	const player = new Player('id');
-	player.fetch().then(() => {
-	    console.log(player);
-	}).catch(error => {
-	    console.log(error.error);
-	});
-	```
+  ```js
+  const player = new Player("id");
+  player
+    .fetch()
+    .then(() => {
+      console.log(player);
+    })
+    .catch((error) => {
+      console.log(error.error);
+    });
+  ```
 
 ### Faction
 
 - Get a faction by its name:
-	```js
-	Faction.fromName('FAC').then(faction => {
-	    console.log(faction);
-	}).catch(error => {
-	    console.log(error.error);
-	});
-	```
+  ```js
+  Faction.fromName("FAC")
+    .then((faction) => {
+      console.log(faction);
+    })
+    .catch((error) => {
+      console.log(error.error);
+    });
+  ```
 - Get a faction by its ID:
-	```js
-	const faction = new Faction('id');
-	faction.fetch().then(() => {
-	    console.log(faction);
-	}).catch(error => {
-	    console.log(error.error);
-	});
-	```
+  ```js
+  const faction = new Faction("id");
+  faction
+    .fetch()
+    .then(() => {
+      console.log(faction);
+    })
+    .catch((error) => {
+      console.log(error.error);
+    });
+  ```
 
 ### Ranking
 
 - Get factions ranking for a month:
+
 ```js
-const ranking = new Ranking('latest');
+const ranking = new Ranking("latest");
 // you can also specify a YYYY-MM formatted month (e.g. 2020-05) instead of 'latest':
 // const ranking = new Ranking('2020-05');
-ranking.fetch().then(() => {
+ranking
+  .fetch()
+  .then(() => {
     console.log(ranking);
-}).catch(error => {
+  })
+  .catch((error) => {
     console.log(error.error);
-});
+  });
 ```
 
 ## Error codes
@@ -88,16 +103,17 @@ You can know whether a data is partial by checking its `partial` property. The o
 ### Example
 
 This example simply requests a player, then retrieves information from its faction. While the first log will only show the faction ID, the second will display all the property of the faction.
+
 ```js
-Player.fromName('username').then(async  player => {
+Player.fromName("username")
+  .then(async (player) => {
     if (player.faction) {
-        console.log(player.faction);
-        await player.faction.fetch();
-        console.log(player.faction);
-    }
-    else
-        console.log('This player is not in a faction.');
-}).catch(error => {
+      console.log(player.faction);
+      await player.faction.fetch();
+      console.log(player.faction);
+    } else console.log("This player is not in a faction.");
+  })
+  .catch((error) => {
     console.log(error.error);
-});
+  });
 ```

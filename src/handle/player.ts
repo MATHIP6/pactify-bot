@@ -1,8 +1,7 @@
-import Faction from './faction';
-import { searchPlayer, playerInfos } from './fetch';
+import Faction from "./faction";
+import { searchPlayer, playerInfos } from "./fetch";
 
 class Player {
-
   public id: any;
   public name: string;
   public registrationDate: Date;
@@ -19,20 +18,19 @@ class Player {
 
   constructor(id: any) {
     this.id = id;
-    this.name = '';
+    this.name = "";
     this.registrationDate = new Date();
     this.lastActivityDate = new Date();
     this.factionLastActivityDate = new Date();
     this.activityTime = 0;
-    this.rank = '';
+    this.rank = "";
     this.power = 0;
-    this.role = '';
+    this.role = "";
     this.faction = undefined;
     this.online = false;
-    this.onlineServer = '';
-    this.headUrl = '';
+    this.onlineServer = "";
+    this.headUrl = "";
   }
-
 
   /**
    * Fetch player infos
@@ -51,7 +49,7 @@ export async function getPlayer(username: String, header: Object) {
     const player = await playerInfos(playerID.current, header);
     return player;
   } catch (e) {
-    throw (e);
+    throw e;
   }
 }
 

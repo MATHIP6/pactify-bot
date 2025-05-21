@@ -1,6 +1,6 @@
 //import fetch from './fetch';
-import Player from './player';
-import { searchFaction, factionInfos } from './fetch';
+import Player from "./player";
+import { searchFaction, factionInfos } from "./fetch";
 
 interface FactionState {
   day: Date;
@@ -46,7 +46,7 @@ export async function getFaction(name: string, headers: any) {
     const faction = await factionInfos(factionID.current, headers);
     return faction;
   } catch (e) {
-    throw (e);
+    throw e;
   }
 }
 
