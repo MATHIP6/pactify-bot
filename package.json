@@ -12,7 +12,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@sequelize/core": "7.0.0-alpha.46",
     "@sequelize/sqlite3": "7.0.0-alpha.46",
