@@ -1,8 +1,8 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
-import Faction from "../handle/faction";
-import { getFaction } from "../handle/faction";
+import { getFaction } from "../api/faction";
 import { header } from "../config";
 import { EmbedBuilder } from "discord.js";
+import { formatDiscordDate } from "../utils/dateFormat";
 
 export const data = new SlashCommandBuilder()
   .setName("faction")
@@ -23,10 +23,11 @@ export async function execute(interaction: CommandInteraction) {
         "La taille de la faction est trop longue !",
       );
     }
-    const faction: Faction = await getFaction(factionName, header);
+    const faction = await getFaction(factionName, header);
     if (!faction) {
       return interaction.editReply("Cette Faction est introuvable !");
     }
+
     if (!faction.name || !faction.creationDate || !faction.statesHistory) {
       console.log(faction.name, faction.creationDate, faction.description);
       throw new Error("Faction attributes is undefined !!!");
@@ -84,20 +85,8 @@ export async function execute(interaction: CommandInteraction) {
         });
       }
     }
-    /*let players = '';
-        
-            for (let playerID in faction.membersRef) {
-              const player = faction.membersRef[playerID]
-              players += `**[${player.name}](http://pactify.fr)** `
-            }*/
     return interaction.editReply({ embeds: [embed] });
   } catch (error) {
     console.error("Erreur !!!", error);
   }
-}
-
-function formatDiscordDate(dateString: string) {
-  const date = new Date(dateString);
-  const formattedDate = Math.floor(date.getTime() / 1000);
-  return `<t:${formattedDate}:d>`;
 }

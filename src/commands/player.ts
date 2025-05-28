@@ -1,7 +1,5 @@
 import { CommandInteraction, SlashCommandBuilder } from "discord.js";
-import Player from "../handle/player";
-import Faction from "../handle/faction";
-import { getPlayer } from "../handle/player";
+import { getPlayer } from "../api/player";
 import { header } from "../config";
 import { EmbedBuilder } from "discord.js";
 import { formatTime, formatDiscordDate } from "../utils/dateFormat";
@@ -23,12 +21,23 @@ export async function execute(interaction: CommandInteraction) {
     if (playerName.length > 18) {
       return await interaction.editReply("La taille du pseudo est trop long !");
     }
-    const player: Player = await getPlayer(playerName, header);
+    const player = await getPlayer(playerName, header);
     if (!player) {
       return interaction.editReply("Ce joueur est introuvable !");
     }
-    const faction: Faction = player.faction;
-    console.log(player);
+    const faction = player.faction;
+    if (
+      player.online == undefined ||
+      !player.name ||
+      !player.headUrl ||
+      !player.power ||
+      !player.registrationDate ||
+      !player.lastActivityDate ||
+      !player.activityTime) {
+      return interaction.editReply(
+        "Ce joueur n'a pas de données disponibles pour le moment. ",
+      );
+    }
     const embed = new EmbedBuilder()
       .setColor("#0099ff")
       .setTitle(player.name)
@@ -62,8 +71,10 @@ export async function execute(interaction: CommandInteraction) {
       });
     }
     if (faction) {
-      if (!faction.icon) {
-        faction.icon = "🏳";
+      if (!faction.icon || !player.role) {
+        return interaction.editReply(
+          "Ce joueur n'a pas de données de faction disponibles pour le moment.",
+        );
       }
       const factionLink = `**[${faction.icon + faction.name}](https://pactify.com/faction/${faction.id})**`;
       embed.addFields(

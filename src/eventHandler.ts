@@ -2,7 +2,7 @@ import { EmbedBuilder } from "discord.js";
 import { client } from ".";
 import { header } from "./config";
 import Event from "./database/event.model";
-import { getLastEvent } from "./handle/fetch";
+import { getLastEvent } from "./api/fetch";
 import { formatDate } from "./utils/dateFormat";
 
 let lastEventTime: Date;
@@ -28,7 +28,7 @@ export async function fetchLastEvent() {
   }
   lastEventTime = event.endDate;
   const servers = await Event.findAll();
-  for (let server of servers) {
+  for (const server of servers) {
     const guild = client.guilds.cache.get(server.guild);
     if (!guild) {
       await server.destroy();
